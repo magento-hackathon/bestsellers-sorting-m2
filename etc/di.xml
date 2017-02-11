@@ -16,4 +16,12 @@
 			</argument>
 		</arguments>
 	</type>
+	<type name="MagentoHackathon\BestsellersSorting\Model\ProcessorsPool">
+		<arguments>
+			<argument name="processors" xsi:type="array">
+				<item name="simpleProductAggregatedReport" xsi:type="string">MagentoHackathon\BestsellersSorting\Model\SimpleProductsAggregatedReportDataProcessor</item>
+				<item name="complexProductAggregatedReport" xsi:type="string">MagentoHackathon\BestsellersSorting\Model\ComplexProductsAggregatedReportDataProcessor</item>
+			</argument>
+		</arguments>
+	</type>
 </config>
