@@ -19,26 +19,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace MagentoHackathon\BestsellersSorting\Setup;
+namespace MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller;
 
-use Magento\Framework\Setup\UpgradeSchemaInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
-
-class UpgradeSchema implements UpgradeSchemaInterface
+class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
 
     /**
-     * {@inheritdoc}
+     * Define resource model
+     *
+     * @return void
      */
-    public function upgrade(
-        SchemaSetupInterface $setup,
-        ModuleContextInterface $context
-    ) {
-        $setup->startSetup();
-        if (version_compare($context->getVersion(), "0.1.0", "<")) {
-        //Your upgrade script
-        }
-        $setup->endSetup();
+    protected function _construct()
+    {
+        $this->_init(
+            'MagentoHackathon\BestsellersSorting\Model\Bestseller',
+            'MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller'
+        );
     }
 }

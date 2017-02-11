@@ -19,26 +19,36 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace MagentoHackathon\BestsellersSorting\Setup;
+namespace MagentoHackathon\BestsellersSorting\Controller\Adminhtml\Bestseller;
 
-use Magento\Framework\Setup\UpgradeSchemaInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
-
-class UpgradeSchema implements UpgradeSchemaInterface
+class Index extends \Magento\Backend\App\Action
 {
 
+    protected $resultPageFactory;
+
     /**
-     * {@inheritdoc}
+     * Constructor
+     *
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
-    public function upgrade(
-        SchemaSetupInterface $setup,
-        ModuleContextInterface $context
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory
     ) {
-        $setup->startSetup();
-        if (version_compare($context->getVersion(), "0.1.0", "<")) {
-        //Your upgrade script
-        }
-        $setup->endSetup();
+        $this->resultPageFactory = $resultPageFactory;
+        parent::__construct($context);
+    }
+
+    /**
+     * Index action
+     *
+     * @return \Magento\Framework\Controller\ResultInterface
+     */
+    public function execute()
+    {
+        $resultPage = $this->resultPageFactory->create();
+            $resultPage->getConfig()->getTitle()->prepend(__("Bestseller"));
+            return $resultPage;
     }
 }

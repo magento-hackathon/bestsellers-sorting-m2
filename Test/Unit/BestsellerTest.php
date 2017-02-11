@@ -19,26 +19,48 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace MagentoHackathon\BestsellersSorting\Setup;
+namespace MagentoHackathon\BestsellersSorting\Test\Unit;
 
-use Magento\Framework\Setup\UpgradeSchemaInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
-
-class UpgradeSchema implements UpgradeSchemaInterface
+class BestsellerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * {@inheritdoc}
+     * Is called once before running all test in class
      */
-    public function upgrade(
-        SchemaSetupInterface $setup,
-        ModuleContextInterface $context
-    ) {
-        $setup->startSetup();
-        if (version_compare($context->getVersion(), "0.1.0", "<")) {
-        //Your upgrade script
-        }
-        $setup->endSetup();
+    public static function setUpBeforeClass()
+    {
+        //setup
+    }
+
+    /**
+     * Is called once after running all test in class
+     */
+    public static function tearDownAfterClass()
+    {
+        //teardown
+    }
+
+    /**
+     * Is called before running a test
+     */
+    protected function setUp()
+    {
+        //setup
+    }
+
+    /**
+     * Is called after running a test
+     */
+    protected function tearDown()
+    {
+        //teardown
+    }
+
+    /**
+     * The test itself, every test function must start with 'test'
+     */
+    public function testGetByCategory()
+    {
+        $this->assertTrue(false);
     }
 }

@@ -1,3 +1,19 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\Catalog\Model\Category">
+		<plugin disabled="true" name="MagentoHackathon_BestsellersSorting_Plugin_Magento_Catalog_Model_Category" sortOrder="10" type="MagentoHackathon\BestsellersSorting\Plugin\Magento\Catalog\Model\Category"/>
+	</type>
+	<virtualType name="MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">magentohackathon_bestseller</argument>
+			<argument name="resourceModel" xsi:type="string">MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="magentohackathon_bestseller_grid_data_source" xsi:type="string">MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
 </config>

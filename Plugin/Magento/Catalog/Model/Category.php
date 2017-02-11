@@ -19,26 +19,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace MagentoHackathon\BestsellersSorting\Setup;
+namespace MagentoHackathon\BestsellersSorting\Plugin\Magento\Catalog\Model;
 
-use Magento\Framework\Setup\UpgradeSchemaInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
-
-class UpgradeSchema implements UpgradeSchemaInterface
+class Category
 {
 
-    /**
-     * {@inheritdoc}
-     */
-    public function upgrade(
-        SchemaSetupInterface $setup,
-        ModuleContextInterface $context
+    public function afterGetAllOptions(
+        \Magento\Catalog\Model\Category $subject,
+        $result
     ) {
-        $setup->startSetup();
-        if (version_compare($context->getVersion(), "0.1.0", "<")) {
-        //Your upgrade script
-        }
-        $setup->endSetup();
+        //Your plugin code
     }
 }
