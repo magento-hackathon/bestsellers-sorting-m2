@@ -1,5 +1,5 @@
 {
-    "name": "magentohackathon/module-bestsellerssorting",
+    "name": "magento-hackathon/module-bestsellers-sorting",
     "license": "GPL-3.0",
     "type": "magento2-module",
     "description": "Bestsellers sorting of products in categories for Magento 2.",
