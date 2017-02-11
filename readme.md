@@ -26,6 +26,13 @@ Installation Instructions
 2. Clear the cache, logout from the admin panel and then login again.
 3. Activate the extension
 
+ToDo
+----
+1. Create indexed attribute for sorting products by product sales in defined periods (e.g. Spring Sale)
+2. Populate it based on the bestsellers reporting routine (daily, monthly, yearly etc.)
+3. Add the attribute to category pages sorting
+4. Implement configuration for the periods. Nice to have: Ability to define period on category level
+
 Support
 -------
 If you have any issues with this extension, open an issue on [GitHub](https://github.com/magentohackathon/MagentoHackathon_BestsellersSorting/issues).
