@@ -1,0 +1,21 @@
+{
+    "name": "magentohackathon/module-bestsellerssorting",
+    "license": "GPL-3.0",
+    "type": "magento2-module",
+    "description": "Bestsellers sorting of products in categories for Magento 2.",
+    "require": {
+    },
+    "authors":[
+        {
+            "name":"Mage Hackathon Munich"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "MagentoHackathon\\BestsellersSorting\\": ""
+        }
+    }
+}
