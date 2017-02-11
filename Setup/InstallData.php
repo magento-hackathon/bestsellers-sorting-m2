@@ -32,6 +32,8 @@ class InstallData implements InstallDataInterface
 
     private $eavSetupFactory;
 
+    const ATTRIBUTE_NAME = 'bestseller_order';
+
     /**
      * {@inheritdoc}
      */
@@ -41,11 +43,12 @@ class InstallData implements InstallDataInterface
     ) {
         //Your install script
 
+        /** @var \Magento\Eav\Setup\EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
 
         $eavSetup->addAttribute(
             \Magento\Catalog\Model\Product::ENTITY,
-            'bestseller_order',
+            self::ATTRIBUTE_NAME,
             [
                 'type' => 'varchar',
                 'backend' => '',
@@ -71,6 +74,13 @@ class InstallData implements InstallDataInterface
                 'group' => 'General',
                 'option' => array('values' => array(""))
             ]
+        );
+
+        $eavSetup->addAttributeToGroup(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'Default',
+            'General',
+            self::ATTRIBUTE_NAME
         );
     }
 
