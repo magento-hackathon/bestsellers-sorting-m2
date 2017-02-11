@@ -5,7 +5,6 @@ Facts
 -----
 - version: 1.0.0
 - extension key: MagentoHackathon_BestsellersSorting
-MagentoHackathon_BestsellersSorting
 - [extension on GitHub](https://github.com/magento-hackathon/bestsellers-sorting-m2)
 
 Description
