@@ -18,10 +18,4 @@
             "MagentoHackathon\\BestsellersSorting\\": ""
         }
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:magento-hackathon/bestsellers-sorting-m2.git"
-        }
-    ]
 }
