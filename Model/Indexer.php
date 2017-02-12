@@ -1,8 +1,8 @@
 <?php
 namespace MagentoHackathon\BestsellersSorting\Model;
-class Custom implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
+class Indexer implements \Magento\Framework\Indexer\ActionInterface, \Magento\Framework\Mview\ActionInterface
 {
-    public function executeList($ids)
+    public function executeList(array $ids)
     {
         $this->executeFull();
     }  //logic

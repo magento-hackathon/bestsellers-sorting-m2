@@ -1,7 +1,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Mview/etc/mview.xsd">
-    <view id="magehackathon_bestsellerindex" class="Magestore\Training\Model\Indexer\Custom" group="indexer">
+    <view id="magehackathon_bestsellerindex" class="MagentoHackathon\BestsellersSorting\Model\Indexer" group="indexer">
         <subscriptions>
+            <table name="sales_order_flat" entity_column="order_id" />
         </subscriptions>
     </view>
 </config>

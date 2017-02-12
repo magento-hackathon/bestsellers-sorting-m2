@@ -1,5 +1,5 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Indexer/etc/indexer.xsd">
-    <indexer id="magehackathon_bestsellerindex" view_id="magehackathon_bestsellerindex" class="Magestore\Training\Model\Indexer\Custom">
+    <indexer id="magehackathon_bestsellerindex" view_id="magehackathon_bestsellerindex" class="MagentoHackathon\BestsellersSorting\Model\Indexer">
         <title translate="true">Magehackathon Bestseller Indexer</title>
         <description translate="true">Indexes Bestseller Products</description>
     </indexer>
