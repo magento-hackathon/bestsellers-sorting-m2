@@ -28,11 +28,87 @@ namespace MagentoHackathon\BestsellersSorting\Model;
 
 class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterface
 {
+
+    /**
+     * @var \Magento\Framework\DB\Adapter\AdapterInterface
+     */
+    private $connection;
+
+    public function __construct(
+        \Magento\Framework\DB\Adapter\AdapterInterface $connection
+    )
+    {
+        $this->connection = $connection;
+    }
+
     /**
      * @inheritdoc
      */
     public function calculate()
     {
+
+        $connection = $this->connection;
+        $column = 'qty_ordered';
+        $mainTable = 'sales_bestseller_aggregated_daily';
+        $type = 'month';
+
+        $periodSubSelect = $connection->select();
+        $ratingSubSelect = $connection->select();
+        $ratingSelect = $connection->select();
+
+        switch ($type) {
+            case 'year':
+                $periodCol = $connection->getDateFormatSql('t.period', '%Y-01-01');
+                break;
+            case 'month':
+                $periodCol = $connection->getDateFormatSql('t.period', '%Y-%m-01');
+                break;
+            default:
+                $periodCol = 't.period';
+                break;
+        }
+
+        $columns = [
+            'period' => 't.period',
+            'store_id' => 't.store_id',
+            'product_id' => 't.product_id',
+            'product_name' => 't.product_name',
+            'product_price' => 't.product_price',
+        ];
+
+        if ($type == 'day') {
+            $columns['id'] = 't.id';  // to speed-up insert on duplicate key update
+        }
+
+        $cols = array_keys($columns);
+        $cols['total_qty'] = new \Zend_Db_Expr('SUM(t.' . $column . ')');
+        $periodSubSelect->from(
+            ['t' => $mainTable],
+            $cols
+        )->group(
+            ['t.store_id', $periodCol, 't.product_id']
+        )->order(
+            ['t.store_id', $periodCol, 'total_qty DESC']
+        );
+
+        $cols = $columns;
+        $cols[$column] = 't.total_qty';
+        $cols['rating_pos'] = new \Zend_Db_Expr(
+            "(@pos := IF(t.`store_id` <> @prevStoreId OR {$periodCol} <> @prevPeriod, 1, @pos+1))"
+        );
+        $cols['prevStoreId'] = new \Zend_Db_Expr('(@prevStoreId := t.`store_id`)');
+        $cols['prevPeriod'] = new \Zend_Db_Expr("(@prevPeriod := {$periodCol})");
+        $ratingSubSelect->from($periodSubSelect, $cols);
+
+        $cols = $columns;
+        $cols['period'] = $periodCol;
+        $cols[$column] = 't.' . $column;
+        $cols['rating_pos'] = 't.rating_pos';
+        $ratingSelect->from($ratingSubSelect, $cols);
+
+        //$sql = $ratingSelect->insertFromSelect($aggregationTable, array_keys($cols));
+        die($ratingSelect);
+
         //@todo use approach from \Magento\Reports\Model\ResourceModel\Helper::updateReportRatingPos
     }
 }
