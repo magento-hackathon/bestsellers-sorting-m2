@@ -30,11 +30,18 @@ class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterf
 {
 
 
+    /**
+     * @var \Magento\Framework\App\ResourceConnection
+     */
+    private $resource;
 
     public function __construct(
+        \Magento\Framework\App\ResourceConnection $resource
+
     )
     {
 
+        $this->resource = $resource;
     }
 
     /**
@@ -43,7 +50,7 @@ class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterf
     public function calculate()
     {
 
-        $connection = $this->connection;
+        $connection = $this->resource->getConnection();
         $column = 'qty_ordered';
         $mainTable = 'sales_bestseller_aggregated_daily';
         $type = 'month';
