@@ -109,8 +109,15 @@ class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterf
         $cols['rating_pos'] = 't.rating_pos';
         $ratingSelect->from($ratingSubSelect, $cols);
 
+
+        $preQuery = "SET @pos = 0, @prevStoreId = -1, @prevPeriod = '0000-00-00'";
+
+
+
+            //$connection->query();
+
         //$sql = $ratingSelect->insertFromSelect($aggregationTable, array_keys($cols));
-        die($ratingSelect);
+        die($preQuery.";".$ratingSelect);
 
         //@todo use approach from \Magento\Reports\Model\ResourceModel\Helper::updateReportRatingPos
     }
