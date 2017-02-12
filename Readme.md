@@ -47,6 +47,16 @@ Any contribution is highly appreciated. The best way to contribute code is to op
 Developer
 ---------
 
+
+Quick Installation Guide
+---------------------------------------------
+
+    composer config repositories.bestsellers-sorting-m2 vcs git@github.com:magento-hackathon/bestsellers-sorting-m2.git
+    composer require magento-hackathon/module-bestsellers-sorting dev-master
+    bin/magento module:enable MagentoHackathon_BestsellersSorting
+    bin/magento setup:upgrade
+    
+
 Licence
 -------
 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)
