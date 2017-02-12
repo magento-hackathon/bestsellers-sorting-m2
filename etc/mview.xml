@@ -1,0 +1,7 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Mview/etc/mview.xsd">
+    <view id="magehackathon_bestsellerindex" class="Magestore\Training\Model\Indexer\Custom" group="indexer">
+        <subscriptions>
+        </subscriptions>
+    </view>
+</config>
