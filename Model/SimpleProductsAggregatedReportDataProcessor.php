@@ -29,16 +29,12 @@ namespace MagentoHackathon\BestsellersSorting\Model;
 class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterface
 {
 
-    /**
-     * @var \Magento\Framework\DB\Adapter\AdapterInterface
-     */
-    private $connection;
+
 
     public function __construct(
-        \Magento\Framework\DB\Adapter\AdapterInterface $connection
     )
     {
-        $this->connection = $connection;
+
     }
 
     /**
