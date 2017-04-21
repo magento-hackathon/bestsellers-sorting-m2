@@ -27,7 +27,7 @@
 
 namespace MagentoHackathon\BestsellersSorting\Model;
 
-class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterface
+class SimpleProductsAggregatedReportDataProcessor
 {
 
 
@@ -35,18 +35,43 @@ class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterf
      * @var ResourceModel\Bestseller
      */
     private $bestseller;
+    /**
+     * @var \Magento\Catalog\Model\ResourceModel\Product\Action
+     */
+    private $action;
+    /**
+     * @var ResourceModel\Bestseller\Collection
+     */
+    private $collection;
 
     public function __construct(
-        \MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller $bestseller
+        \MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller $bestseller,
+        \Magento\Catalog\Model\ResourceModel\Product\Action $action,
+        \MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller\Collection $collection
 
     )
     {
 
         $this->bestseller = $bestseller;
+        $this->action = $action;
+        $this->collection = $collection;
     }
 
     public function calculate($storeId = 0)
     {
         $this->bestseller->aggregate(null, null);
+
+        $collection = $this->collection;
+        /** @var \MagentoHackathon\BestsellersSorting\Model\Bestseller $productId */
+        foreach ($collection as $item) {
+
+            /**https://magento.stackexchange.com/questions/151186/best-way-to-update-products-attribute-value */
+            $this->action->updateAttributes(
+                [$item->getProductId()],
+                ['bestseller_order' => $item->getRatingPos()],
+                $item->getStoreId());
+        }
+
+
     }
 }
