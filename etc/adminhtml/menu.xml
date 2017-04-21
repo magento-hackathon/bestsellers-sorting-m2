@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-	<menu>
-		<add id="MagentoHackathon::top_level" module="MagentoHackathon_BestsellersSorting" resource="Magento_Backend::content" sortOrder="9999" title="MagentoHackathon"/>
-		<add action="magentohackathon_bestsellerssorting/bestseller/index" id="MagentoHackathon::magentohackathon_bestseller" module="MagentoHackathon_BestsellersSorting" parent="MagentoHackathon::top_level" resource="Magento_Backend::content" sortOrder="9999" title="Bestseller"/>
-	</menu>
-</config>
