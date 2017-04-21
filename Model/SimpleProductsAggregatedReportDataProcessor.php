@@ -24,6 +24,7 @@
  * and save bestsellers order to product attribute
  *
  */
+
 namespace MagentoHackathon\BestsellersSorting\Model;
 
 class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterface
@@ -68,25 +69,32 @@ class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterf
         $this->eavConfig = $eavConfig;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function calculate($storeId = 0)
     {
 
         $connection = $this->resource->getConnection();
-
-        $periodDays = $this->scopeConfig->getValue(
-            'catalog/group/period',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
+        $type = 'month';
         $column = 'qty_ordered';
-        $mainTable = 'sales_bestsellers_aggregated_daily';
+
+        $mainTable = $connection->getTableName('magentohackathon_bestseller');
+        $aggregationTable = $mainTable;
+
 
         $periodSubSelect = $connection->select();
         $ratingSubSelect = $connection->select();
         $ratingSelect = $connection->select();
-        $periodCol = 't.period';
+
+        switch ($type) {
+            case 'year':
+                $periodCol = $connection->getDateFormatSql('t.period', '%Y-01-01');
+                break;
+            case 'month':
+                $periodCol = $connection->getDateFormatSql('t.period', '%Y-%m-01');
+                break;
+            default:
+                $periodCol = 't.period';
+                break;
+        }
 
         $columns = [
             'period' => 't.period',
@@ -96,21 +104,19 @@ class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterf
             'product_price' => 't.product_price',
         ];
 
+        if ($type == 'day') {
+            $columns['id'] = 't.id';  // to speed-up insert on duplicate key update
+        }
+
         $cols = array_keys($columns);
         $cols['total_qty'] = new \Zend_Db_Expr('SUM(t.' . $column . ')');
         $periodSubSelect->from(
             ['t' => $mainTable],
             $cols
-        )->where(
-            $periodCol . '>=?', $this->date->gmtDate('Y-m-d')
-        )->where(
-            $periodCol . '<=?', $this->date->gmtDate('Y-m-d')
-        )->where(
-            'store_id =?', $storeId
         )->group(
-            ['t.store_id', 't.product_id']
+            ['t.store_id', $periodCol, 't.product_id']
         )->order(
-            ['t.store_id', 'total_qty DESC']
+            ['t.store_id', $periodCol, 'total_qty DESC']
         );
 
         $cols = $columns;
@@ -122,26 +128,15 @@ class SimpleProductsAggregatedReportDataProcessor implements DataProcessorInterf
         $cols['prevPeriod'] = new \Zend_Db_Expr("(@prevPeriod := {$periodCol})");
         $ratingSubSelect->from($periodSubSelect, $cols);
 
-        $cols = [];
-        $cols['store_id'] = 't.store_id as store_id';
-        $cols['product_id'] = 't.product_id as entity_id';
-        $cols['rating_pos'] = 't.rating_pos as value';
-
-
-        $attribute = $this->eavConfig->getAttribute(
-            \Magento\Catalog\Model\Product::ENTITY,
-            \MagentoHackathon\BestsellersSorting\Setup\InstallData::ATTRIBUTE_NAME
-        );
-
+        $cols = $columns;
+        $cols['period'] = $periodCol;
+        $cols[$column] = 't.' . $column;
+        $cols['rating_pos'] = 't.rating_pos';
         $ratingSelect->from($ratingSubSelect, $cols);
 
-        $preQuery = "SET @pos = 0, @prevStoreId = -1, @prevPeriod = '0000-00-00'";
-
-        //$connection->query();
-
-        //$sql = $ratingSelect->insertFromSelect($aggregationTable, array_keys($cols));
-                die($preQuery.";".$ratingSelect. PHP_EOL);
-
-        //@todo use approach from \Magento\Reports\Model\ResourceModel\Helper::updateReportRatingPos
+        $sql = $ratingSelect->insertFromSelect($aggregationTable, array_keys($cols));
+        $connection->query("SET @pos = 0, @prevStoreId = -1, @prevPeriod = '0000-00-00'");
+        $connection->query($sql);
+        return $this;
     }
 }

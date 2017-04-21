@@ -25,6 +25,11 @@ use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 
+/**
+ * Class InstallSchema
+ * @package MagentoHackathon\BestsellersSorting\Setup
+ * n98-magerun2.phar sys:setup:change-version MagentoHackathon_BestsellersSorting 0.0.1
+ */
 class InstallSchema implements InstallSchemaInterface
 {
 
@@ -38,29 +43,63 @@ class InstallSchema implements InstallSchemaInterface
         $installer = $setup;
         $installer->startSetup();
 
-        $table_magentohackathon_bestseller = $setup->getConnection()->newTable($setup->getTable('magentohackathon_bestseller'));
 
-        
-        $table_magentohackathon_bestseller->addColumn(
-            'bestseller_id',
+
+        $table = $installer->getConnection()->newTable(
+            $setup->getTable('magentohackathon_bestseller')
+        )->addColumn(
+            'id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            array('identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,),
-            'Entity ID'
-        );
-        
-
-        
-        $table_magentohackathon_bestseller->addColumn(
-            'sales',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+            'Id'
+        )->addColumn(
+            'period',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DATE,
             null,
             [],
-            'Bestseller Sales'
+            'Period'
+        )->addColumn(
+            'store_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true],
+            'Store Id'
+        )->addColumn(
+            'product_id',
+            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+            null,
+            ['unsigned' => true],
+            'Product Id'
+        )->addColumn(
+            'product_name',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            255,
+            ['nullable' => true],
+            'Product Name'
+        )->addColumn(
+            'product_price',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+            '12,4',
+            ['nullable' => false, 'default' => '0.0000'],
+            'Product Price'
+        )->addColumn(
+            'qty_ordered',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+            '12,4',
+            ['nullable' => false, 'default' => '0.0000'],
+            'Qty Ordered'
+        )->addColumn(
+            'rating_pos',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            null,
+            ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+            'Rating Pos'
         );
-        
 
-        $setup->getConnection()->createTable($table_magentohackathon_bestseller);
+        $installer->getConnection()->createTable($table);
+
+
 
         $setup->endSetup();
     }

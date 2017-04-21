@@ -6,7 +6,7 @@
 			<tab>catalog</tab>
 			<resource>MagentoHackathon_BestsellersSorting::config_magentohackathon_bestsellerssorting</resource>
 			<group id="group" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-				<label>group</label>
+				<label>Bestseller Sorting</label>
 				<field id="period" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="22" translate="label" type="text">
 					<label>Period in days</label>
 					<comment>Period for computing the bestseller sorting.</comment>
