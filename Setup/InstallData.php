@@ -78,8 +78,8 @@ class InstallData implements InstallDataInterface
 
         $eavSetup->addAttributeToGroup(
             \Magento\Catalog\Model\Product::ENTITY,
-            'Default',
-            'General',
+            $eavSetup->getDefaultAttributeSetId(\Magento\Catalog\Model\Product::ENTITY),
+            $eavSetup->getDefaultAttributeGroupId(\Magento\Catalog\Model\Product::ENTITY),
             self::ATTRIBUTE_NAME
         );
     }
