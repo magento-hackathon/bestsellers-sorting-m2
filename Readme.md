@@ -38,7 +38,7 @@ ToDo
 
 Support
 -------
-If you have any issues with this extension, open an issue on [GitHub](https://github.com/magentohackathon/MagentoHackathon_BestsellersSorting/issues).
+If you have any issues with this extension, open an issue on [GitHub](https://github.com/magento-hackathon/bestsellers-sorting-m2/issues).
 
 Contribution
 ------------
