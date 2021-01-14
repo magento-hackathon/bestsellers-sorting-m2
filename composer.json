@@ -1,5 +1,5 @@
 {
-    "name": "zcuric/module-bestsellers-sorting",
+    "name": "magento-hackathon/module-bestsellers-sorting",
     "description": "Bestsellers sorting of products in categories for Magento 2.",
     "license": "GPL-3.0",
     "type": "magento2-module",
