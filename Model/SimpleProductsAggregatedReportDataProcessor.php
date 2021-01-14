@@ -44,34 +44,45 @@ class SimpleProductsAggregatedReportDataProcessor
      */
     private $collection;
 
+    protected $_productCollectionFactory;
+
     public function __construct(
         \MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller $bestseller,
         \Magento\Catalog\Model\ResourceModel\Product\Action $action,
-        \MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller\Collection $collection
-
+        \MagentoHackathon\BestsellersSorting\Model\ResourceModel\Bestseller\Collection $collection,
+        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
     )
     {
 
         $this->bestseller = $bestseller;
         $this->action = $action;
         $this->collection = $collection;
+        $this->_productCollectionFactory = $productCollectionFactory;
     }
 
     public function calculate($storeId = 0)
     {
         $this->bestseller->aggregate(null, null);
-
+        
+        $productIds = $this->_productCollectionFactory->create()->getAllIds();
+        
         $collection = $this->collection;
         /** @var \MagentoHackathon\BestsellersSorting\Model\Bestseller $productId */
         foreach ($collection as $item) {
 
+            /**
+             * https://github.com/magento-hackathon/bestsellers-sorting-m2/issues/1
+             *  Integrity constraint violation issue on running reindex #1
+             */
+            if(!in_array($item->getProductId(),$productIds)) {
+                continue;
+            }
+            
             /**https://magento.stackexchange.com/questions/151186/best-way-to-update-products-attribute-value */
             $this->action->updateAttributes(
                 [$item->getProductId()],
                 ['bestseller_order' => $item->getRatingPos()],
                 $item->getStoreId());
         }
-
-
     }
 }
